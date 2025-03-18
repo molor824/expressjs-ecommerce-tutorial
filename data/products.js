@@ -71,6 +71,6 @@ const products = [
     rating: 4,
     numReviews: 12,
   },
-].map((obj, index) => ({ id: index + 1, ...obj }));
+];
 
 export default products;
