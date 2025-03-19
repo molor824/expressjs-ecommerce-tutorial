@@ -26,4 +26,26 @@ router.get(
   })
 );
 
+router.post("/", asyncHandler(async (req, res) => {
+  const fields = req.body;
+
+  const newProduct = await Product.create(fields);
+
+  res.json(newProduct._id);
+}));
+
+router.patch("/:id", asyncHandler(async (req, res) => {
+  const updateFields = req.body;
+
+  await Product.updateOne({ _id: req.params.id }, { $set: updateFields });
+
+  res.json("OK");
+}));
+
+router.delete("/:id", asyncHandler(async (req, res) => {
+  await Product.deleteOne({ _id: req.params.id });
+
+  res.json("OK");
+}))
+
 export default router;
