@@ -9,19 +9,16 @@ if (!SECRET_KEY) {
 }
 
 export function generate(user) {
-  return jwt.sign({ id: user._id, password: user.password }, SECRET_KEY, {
+  return jwt.sign({ id: user._id }, SECRET_KEY, {
     expiresIn: "1h",
   });
 }
 export async function getUser(token) {
-  const { id, password } = jwt.verify(token, SECRET_KEY);
-  const user = await User.findById(id);
+  const verifiedToken = jwt.verify(token, SECRET_KEY);
+  const user = await User.findById(verifiedToken.id);
 
   if (!user) {
     throw new Error("User does not exist!");
-  }
-  if (user.password !== password) {
-    throw new Error("Invalid JWT token!");
   }
   return user;
 }
