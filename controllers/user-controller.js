@@ -13,16 +13,15 @@ function tokenResponder(res, user) {
 }
 export async function login(req, res) {
   const { email, password: rawPassword } = req.body;
-  const users = (await User.find({ email })).filter((user) =>
+  const user = (await User.find({ email })).find((user) =>
     bcrypt.compareSync(rawPassword, user.password)
   );
-  console.log(users);
 
-  if (!users[0]) {
+  if (!user) {
     throw new Error("User not found!");
   }
 
-  tokenResponder(res, users[0]);
+  tokenResponder(res, user);
 }
 export async function register(req, res) {
   const { name, email, password: rawPassword } = req.body;
