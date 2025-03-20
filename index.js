@@ -1,8 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import ProductRoutes from "./routes/product-routes.js";
+import ProductRouter from "./routers/product-router.js";
+import UserRouter from "./routers/user-router.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 connectDB();
@@ -12,9 +14,11 @@ if (!port) {
 }
 const app = express();
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({ origin: "*" }));
-app.use("/api/products", ProductRoutes);
+app.use("/api/products", ProductRouter);
+app.use("/api/user", UserRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
