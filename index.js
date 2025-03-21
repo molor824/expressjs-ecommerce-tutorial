@@ -5,6 +5,7 @@ import ProductRouter from "./routers/product-router.js";
 import UserRouter from "./routers/user-router.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import errorHandler from "./middleware/error-handler.js";
 
 dotenv.config();
 connectDB();
@@ -23,6 +24,8 @@ app.use("/api/user", UserRouter);
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
+
+app.use(errorHandler);
 
 app.listen(port, () =>
   console.log(`Server listening at port http://localhost:${port}`)

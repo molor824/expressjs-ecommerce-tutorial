@@ -9,7 +9,7 @@ function tokenResponder(res, user) {
     httpOnly: true,
     expires: new Date(Date.now() + 3600000),
   });
-  res.json({ _id: user._id });
+  res.end();
 }
 export async function login(req, res) {
   const { email, password: rawPassword } = req.body;
@@ -37,4 +37,8 @@ export async function register(req, res) {
 export async function info(req, res) {
   const { name, email, _id } = req.user;
   res.json({ _id, name, email });
+}
+export async function logout(req, res) {
+  res.clearCookie("jwt");
+  res.end();
 }
