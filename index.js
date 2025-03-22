@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 app.use("/api/products", ProductRouter);
-app.use("/api/user", UserRouter);
+app.use("/api/users", UserRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");

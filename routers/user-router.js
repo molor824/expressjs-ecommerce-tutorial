@@ -1,15 +1,22 @@
 import express from "express";
-import asyncHandler from "../middleware/async-handler.js";
 import * as UserController from "../controllers/user-controller.js";
 import authenticate from "../middleware/authenticate.js";
+import checkAdmin from "../middleware/check-admin.js";
 
 const router = express.Router();
 
-router.post("/register", asyncHandler(UserController.register));
+router.post("/register", UserController.register);
+router.post("/login", UserController.login);
 router
-  .route("/")
-  .post(UserController.login)
-  .get(authenticate, asyncHandler(UserController.info))
-  .delete(authenticate, asyncHandler(UserController.logout));
+  .route("/profile")
+  .get(authenticate, UserController.info)
+  .put(authenticate, UserController.updateInfo)
+  .delete(authenticate, UserController.logout);
+router.route("/").get(authenticate, checkAdmin, UserController.allUsers);
+router
+  .route("/:id")
+  .get(authenticate, checkAdmin, UserController.getUser)
+  .put(authenticate, checkAdmin, UserController.updateUser)
+  .delete(authenticate, checkAdmin, UserController.deleteUser);
 
 export default router;

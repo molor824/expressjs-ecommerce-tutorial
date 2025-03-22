@@ -1,6 +1,6 @@
 /**
- * 
- * @param {(req: Request, res: Response, next) => Promise<void>} fn 
+ *
+ * @param {(req: Request, res: Response, next) => Promise<void>} fn
  * @returns (req: Request, res: Response, next) => Promise<void>
  */
 export default function asyncHandler(fn) {
