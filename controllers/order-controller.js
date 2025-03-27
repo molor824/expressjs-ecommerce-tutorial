@@ -9,26 +9,17 @@ function adminOrOwnOrder(order, user, res) {
 }
 export const createOrder = asyncHandler(async (req, res) => {
   const user = req.user;
-  const {
-    orderItems,
-    shippingAddress,
-    paymentMethod,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-  } = req.body;
-  const order = await Order.create({
-    user: user._id,
-    orderItems,
-    shippingAddress,
-    paymentMethod,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice: Math.round((itemsPrice + taxPrice + shippingPrice) * 100) / 100,
-    isPaid: false,
-    isDelivered: false,
-  });
+  const order = new Order();
+  Object.assign(order, req.body);
+  order.user = user._id;
+  order.orderItems = req.body.orderItems.map((item) => ({
+    name: item.name,
+    qty: item.qty,
+    image: item.image,
+    price: item.price,
+    product: item._id,
+  }));
+  await order.save();
   res.json(order);
 });
 export const getAllOrders = asyncHandler(async (req, res) => {

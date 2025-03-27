@@ -10,13 +10,13 @@ router.post("/auth", UserController.login);
 router
   .route("/profile")
   .get(authenticate, UserController.info)
-  .put(authenticate, UserController.updateInfo)
-  .delete(authenticate, UserController.logout);
+  .put(authenticate, UserController.updateInfo);
+router.post("/logout", UserController.logout);
 router.route("/").get(authenticate, checkAdmin, UserController.allUsers);
 router
   .route("/:id")
   .get(authenticate, checkAdmin, UserController.getUser)
-  .put(authenticate, checkAdmin, UserController.updateUser);
-router.post("/logout", authenticate, checkAdmin, UserController.deleteUser);
+  .put(authenticate, checkAdmin, UserController.updateUser)
+  .delete(authenticate, checkAdmin, UserController.deleteUser);
 
 export default router;
