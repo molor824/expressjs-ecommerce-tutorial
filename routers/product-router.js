@@ -12,7 +12,7 @@ router
 
 router.route("/top").get(ProductController.getTop);
 router
-  .route("/:id/review")
+  .route("/:id/reviews")
   .get(ProductController.reviews)
   .post(authenticate, ProductController.createReview);
 

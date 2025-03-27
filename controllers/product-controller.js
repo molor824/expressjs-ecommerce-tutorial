@@ -3,7 +3,7 @@ import Product from "../models/product.js";
 
 const getAll = asyncHandler(async (_, res) => {
   const products = await Product.find({});
-  res.json(products);
+  res.json({ products });
 });
 const getById = asyncHandler(async (req, res) => {
   const { id } = req.params;
